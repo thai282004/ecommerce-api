@@ -66,12 +66,6 @@
 - Mỗi user chỉ được review 1 sản phẩm 1 lần
 - Xóa review: chủ review hoặc ADMIN
 
-### ❌ Ngoài scope (cố ý giới hạn)
-- Thanh toán / Payment gateway
-- Email notification
-- Upload ảnh sản phẩm
-- Discount / coupon
-- Refresh token
 
 ---
 
