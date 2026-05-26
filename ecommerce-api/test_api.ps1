@@ -91,7 +91,7 @@ $cartBody = @{
 $cartRes = Invoke-RestMethod -Uri "$baseUrl/cart/items" -Method Post -Headers $headers -Body $cartBody -ContentType "application/json"
 Write-Success "Cart updated! Total cart price: $($cartRes.totalPrice)$"
 foreach ($item in $cartRes.items) {
-    Write-Info " - Item: $($item.productName) x $($item.quantity) = $($item.subTotal)$"
+    Write-Info " - Item: $($item.productName) x $($item.quantity) = $($item.subtotal)$"
 }
 
 # --------------------------------------------------

@@ -12,12 +12,16 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // JOIN FETCH category để tránh N+1 query và LazyInitializationException
-    @Query("SELECT p FROM Product p JOIN FETCH p.category c " +
-           "WHERE (:keyword IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
-           "AND (:categoryId IS NULL OR c.id = :categoryId) " +
-           "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
-           "AND (:maxPrice IS NULL OR p.price <= :maxPrice)")
+    @Query(value = "SELECT p FROM Product p JOIN FETCH p.category c " +
+                   "WHERE (:keyword IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+                   "AND (:categoryId IS NULL OR c.id = :categoryId) " +
+                   "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
+                   "AND (:maxPrice IS NULL OR p.price <= :maxPrice)",
+           countQuery = "SELECT COUNT(p) FROM Product p JOIN p.category c " +
+                        "WHERE (:keyword IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+                        "AND (:categoryId IS NULL OR c.id = :categoryId) " +
+                        "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
+                        "AND (:maxPrice IS NULL OR p.price <= :maxPrice)")
     Page<Product> findWithFilters(
             @Param("keyword") String keyword,
             @Param("categoryId") Long categoryId,
